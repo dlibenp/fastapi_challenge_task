@@ -24,7 +24,7 @@ app.add_middleware(CORSMiddleware,
     allow_origins=origins, allow_credentials=True,
     allow_methods=["*"], allow_headers=["*"],
 )
-# app.middleware('http')(log_request)
+app.middleware('http')(log_request)
 
 ### ROUTERS
 app.include_router(oauth2_jwt_router)  # FROM OAUTH2 JWT AUTHENTICATED - AUTHORIZED
