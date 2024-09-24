@@ -1,6 +1,9 @@
 from uuid import uuid4
 from sqlalchemy.orm import Session
-import models, schemas, oauth2_jwt
+
+from models import models
+from schemas import schemas
+from utils import oauth2_jwt
 
 
 def get_user(db: Session, user_id: str):

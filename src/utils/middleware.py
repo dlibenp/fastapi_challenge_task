@@ -2,7 +2,9 @@ import os
 from fastapi import Request
 import geocoder
 import httpx
-import crud, database
+
+from databases import database
+from utils import crud
 
 API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 

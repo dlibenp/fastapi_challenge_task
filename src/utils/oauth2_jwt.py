@@ -6,12 +6,13 @@ from typing import Annotated, Optional, List
 from fastapi import Depends, APIRouter, HTTPException, status, Body, Path, Query
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
-from database import Base, get_db as database_get_db
-import crud, models
+
+from databases.database import Base, get_db as database_get_db
+from models import models
+from utils import crud
 
 load_dotenv()  
 
