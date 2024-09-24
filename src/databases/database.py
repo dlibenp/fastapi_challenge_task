@@ -20,6 +20,9 @@ Base = declarative_base()
 def create_db():
     Base.metadata.create_all(engine)
 
+def drop_db():
+    Base.metadata.drop_all(engine)
+
 def get_db():
     db = SessionLocal()
     try:
