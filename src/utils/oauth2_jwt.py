@@ -10,9 +10,9 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
 
-from databases.database import Base, get_db as database_get_db
-from models import models
-from utils import crud
+from ..databases.database import Base, get_db as database_get_db
+from ..models import models
+from ..utils import crud
 
 load_dotenv()  
 

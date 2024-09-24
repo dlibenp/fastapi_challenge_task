@@ -3,9 +3,9 @@ from fastapi import APIRouter, HTTPException, status, Depends, Body, Path, Query
 from sqlalchemy.orm import Session
 from typing import Annotated
 
-from databases import database
-from models import models
-from utils import crud, oauth2_jwt
+from ..databases import database
+from ..models import models
+from ..utils import crud, oauth2_jwt
 
 
 router = APIRouter(prefix='/api/v1', tags=['users'], dependencies=[Depends(oauth2_jwt.get_current_user)])

@@ -2,11 +2,11 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers.tasks_router import router as task_router
-from routers.users_router import router as user_router
-from utils.oauth2_jwt import router as oauth2_jwt_router
-from utils.middleware import log_request
-from databases.database import create_db as metadata_db_migrations
+from .routers.tasks_router import router as task_router
+from .routers.users_router import router as user_router
+from .utils.oauth2_jwt import router as oauth2_jwt_router
+from .utils.middleware import log_request
+from .databases.database import create_db as metadata_db_migrations
 
 
 app = FastAPI(
