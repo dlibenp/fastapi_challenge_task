@@ -3,9 +3,10 @@ from fastapi import APIRouter, HTTPException, status, Depends, Body, Path, Query
 from sqlalchemy.orm import Session
 from typing import Annotated
 import crud, models, database
+from oauth2_jwt import get_current_user
 
 
-router = APIRouter(prefix='/api/v1', tags=['tasks'])
+router = APIRouter(prefix='/api/v1', tags=['tasks'], dependencies=[Depends(get_current_user)])
 
 @router.get("/tasks/", response_model=list[models.Task], tags=['tasks'], description='Retrieve all tasks.')
 def find_tasks(

@@ -1,4 +1,3 @@
-from uuid import uuid4
 from sqlalchemy import Boolean, Column, ForeignKey, String, UUID, DateTime, func
 from sqlalchemy.orm import relationship
 
@@ -29,6 +28,22 @@ class Task(Base):
 
     owner_id = Column(UUID, ForeignKey("users.id", ondelete="CASCADE"), nullable=True)
     owner = relationship("User", back_populates="tasks")
+
+    created_at = Column(DateTime, index=True, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+
+
+class Weather(Base):
+    __tablename__ = "weather"
+
+    id = Column(UUID, primary_key=True, index=True)
+    hostname = Column(String, index=True)
+    country = Column(String)
+    city = Column(String, nullable=True)
+    weather = Column(String)
+    temperature = Column(String, nullable=True)
+    humidity = Column(String, nullable=True)
+    wind_speed = Column(String, nullable=True)
 
     created_at = Column(DateTime, index=True, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())

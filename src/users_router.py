@@ -3,9 +3,10 @@ from fastapi import APIRouter, HTTPException, status, Depends, Body, Path, Query
 from sqlalchemy.orm import Session
 from typing import Annotated
 import crud, models, database
+from oauth2_jwt import get_current_user
 
 
-router = APIRouter(prefix='/api/v1', tags=['users'])
+router = APIRouter(prefix='/api/v1', tags=['users'], dependencies=[Depends(get_current_user)])
 
 
 @router.get("/users/", response_model=list[models.User], tags=['users'], description='Retrieve all users.')
@@ -49,3 +50,12 @@ def delete_user(id: UUID = Path(description='User ID'), db: Session = Depends(da
     if crud.delete_user(db=db, user_id=id):
         return
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with {id=} not found")
+
+
+@router.get("/weather/", response_model=list[models.Weather], description='Retrieve all weathers.')
+def find_weathers(
+    limit: Annotated[int | None, Query(title='Limit', description='Paging limit variable.', ge=0, le=100)] = 10, 
+    offset: Annotated[int | None, Query(title='Offset', description='Paging offset variable.', ge=0)] = 0, 
+    db: Session = Depends(database.get_db)):
+
+    return crud.get_weathers(db, offset=offset, limit=limit)

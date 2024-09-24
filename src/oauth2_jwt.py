@@ -3,7 +3,7 @@ import os
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 from typing import Annotated, Optional, List
-from fastapi import Depends, APIRouter, HTTPException, status
+from fastapi import Depends, APIRouter, HTTPException, status, Body, Path, Query
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
@@ -98,7 +98,7 @@ async def get_current_active_user(current_user: Annotated[models.User, Depends(g
 
 # Create JWT access token, timedelta for expiration time.
 @router.post("/token", response_model=Token)
-async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], 
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], 
     db: Session = Depends(database_get_db)) -> Token:
 
     user = authenticate_user(email=form_data.username, password=form_data.password, db=db)
@@ -117,19 +117,9 @@ async def read_users_me(current_user: Annotated[models.User, Depends(get_current
     return current_user
 
 
-# @router.post("/users/me/", response_model=UserAuthBase)
-# def create_users_me(user: Annotated[UserAuth, Body()] = None, db: Session = Depends(database_get_db)):
+@router.post("/users/me/", response_model=models.User)
+def register(user: Annotated[models.UserCreate, Body()] = None, db: Session = Depends(database_get_db)):
 
-#     if db_user := get_user_by_username(db, username=user.username):
-#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Username: {db_user.username} already registered")
-#     return create_user(db=db, user=user)
-
-
-def main():
-    # fb001dfcffd1c899f3297871406242f097aecf1a5342ccf3ebcd116146188e4b
-    print('********* PASSWORD HASH *********', get_password_hash('admin'))
-
-
-if __name__ == '__main__':
-    # main()
-    pass
+    if db_user := crud.get_user_by_email(db, email=user.email):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Email: {db_user.email} already registered")
+    return crud.create_user(db=db, user=user)

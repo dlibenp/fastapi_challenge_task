@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from tasks_router import router as task_router
 from users_router import router as user_router
 from oauth2_jwt import router as oauth2_jwt_router
+from middleware import log_request
 from database import create_db as metadata_db_migrations
 
 
@@ -22,6 +23,7 @@ app.add_middleware(CORSMiddleware,
     allow_origins=origins, allow_credentials=True,
     allow_methods=["*"], allow_headers=["*"],
 )
+app.middleware('http')(log_request)
 
 ### ROUTERS
 app.include_router(oauth2_jwt_router)  # FROM OAUTH2 JWT AUTHENTICATED - AUTHORIZED

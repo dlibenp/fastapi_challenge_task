@@ -62,3 +62,13 @@ class User(UserBase):
 
     class Config:
         from_attributes = True
+
+
+class Weather(BaseModel):
+    hostname: str
+    country: str
+    city: str | None = None
+    weather: str
+    temperature: str | None = None
+    humidity: str | None = None
+    wind_speed: str | None = None

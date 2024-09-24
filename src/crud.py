@@ -1,4 +1,3 @@
-import hashlib
 from uuid import uuid4
 from sqlalchemy.orm import Session
 import models, schemas, oauth2_jwt
@@ -35,7 +34,7 @@ def update_user(db: Session, user_id: str, user: models.UserUpdate):
         if user.is_active is not None:
             db_user.is_active = user.is_active
         if user.password is not None:
-            db_user.hashed_password = hashlib.sha3_256(user.password.encode()).hexdigest()
+            db_user.hashed_password = oauth2_jwt.get_password_hash(user.password)
         
         db.commit()
         db.refresh(db_user)
@@ -105,3 +104,20 @@ def delete_task(db: Session, task_id: str):
         db.commit()
         return True
     return False
+
+
+def create_weather(db: Session, weather: dict):
+    db_weather = schemas.Weather(
+        id=uuid4(), hostname=weather['hostname'], 
+        country=weather['country'], city=weather['city'],
+        weather=weather['weather'], temperature=weather['temperature'],
+        humidity=weather['humidity'], wind_speed=weather['wind_speed']
+    )
+    db.add(db_weather)
+    db.commit()
+    db.refresh(db_weather)
+    return db_weather
+
+
+def get_weathers(db: Session, offset: int = 0, limit: int = 100):
+    return db.query(schemas.Weather).offset(offset).limit(limit).all()
