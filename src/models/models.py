@@ -56,7 +56,7 @@ class UserUpdate(BaseModel):
 class User(UserBase):
     id: UUID = Field(title='ID', default_factory=uuid4)
     is_active: bool | None = Field(title='IsActive', default=True)
-    items: list[Task] = []
+    items: List[Task] = []
     created_at: datetime | None = Field(title='CreatedAt', default=None)
     updated_at: datetime | None = Field(title='UpdatedAt', default=None)
 
