@@ -9,6 +9,10 @@ services:
     restart: always
     environment:
       - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/postgres
+      - SECRET_KEY=4bd037cebda1f8b35517b3d178a3363a012445dd281f6e0f704b1a9620dc4637
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - OPENWEATHERMAP_API_KEY=864549c3b8ffd8f97c064be91503208b
     ports:
       - 8000:8000
     volumes:
