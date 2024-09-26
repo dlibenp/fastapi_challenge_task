@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional
 from uuid import UUID, uuid4
 from enum import Enum
 from datetime import datetime
@@ -56,7 +56,7 @@ class UserUpdate(BaseModel):
 class User(UserBase):
     id: UUID = Field(title='ID', default_factory=uuid4)
     is_active: bool | None = Field(title='IsActive', default=True)
-    items: List[Task] = []
+    tasks: list[Task] = []
     created_at: datetime | None = Field(title='CreatedAt', default=None)
     updated_at: datetime | None = Field(title='UpdatedAt', default=None)
 
