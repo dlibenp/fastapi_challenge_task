@@ -1,5 +1,71 @@
-# fastapi_challenge_task
+   # ***fastapi_challenge_task***
 Technical Challenge - Fastapi
+
+## Objective:
+● Create an API with the endpoints below in the other section.\
+● Use a public repo in github and share it with the person that sent you the
+challenge.\
+● For the above endpoints implements oauth2 for the authentication.\
+● For every call made to any endpoint store the ip address, country that belongs to
+this ip address and the state of the weather in this country.\
+● For the weather use an api that gives you this information.\
+● Use Postgres as a database engine.\
+● prepare a Dockerfile or Compose tu test locally your solution.\
+● Build a READM.md file with all the documentation including api doc, postman files,
+json files and so on.
+
+______________________________
+## Endpoints a desarrollar:
+
+> ***Create a New Task***
+> > HTTP Method: POST
+> > 
+> > Endpoint: /tasks
+> >
+> > Functionality:
+> > > Accepts a JSON body with a taskName and description.\
+> > > Stores the task with a unique taskId, a taskName, description, and status (default
+status: "pending").\
+> > > Returns the created task as a JSON response.
+>
+> ***Get All Tasks***
+> > HTTP Method: GET
+> > 
+> > Endpoint: /tasks
+> >
+> > Functionality:
+> > > Retrieves all tasks from.\
+> > > Returns a JSON array of tasks.
+>
+> ***Get a Single Task by ID***
+> > HTTP Method: GET
+> > 
+> > Endpoint: /tasks/{taskId}
+> >
+> > Functionality:
+> > > Retrieves a task by its taskId.\
+> > > Returns the task as a JSON response if it exists, otherwise returns a 404 error.
+>
+> ***Update a Task***
+> > HTTP Method: PUT
+> > 
+> > Endpoint: /tasks/{taskId}
+> >
+> > Functionality:
+> > > Accepts a JSON body with updated values (taskName, description, status).\
+> > > Updates the task if it exists.\
+> > > Returns the updated task as a JSON response.
+>
+> ***Delete a Task***
+> > HTTP Method: DELETE
+> > 
+> > Endpoint: /tasks/{taskId}
+> >
+> > Functionality:
+> > > Deletes a task by taskId.\
+> > > Returns a success message or a 404 error if the task doesn't exist.
+
+***************************
 
 ## ⚡ Use local with virtual environment.
 1. Create dir:
@@ -22,6 +88,8 @@ Technical Challenge - Fastapi
    ```shell
    pip install -r requirenment.txt
    ```
+
+-------------------------
 
 ## ⚡ Run
 ```shell
@@ -166,22 +234,22 @@ curl -X 'GET' 'http://localhost:8000/api/v1/tasks/users/<USER-ID>?limit=10&offse
 ```
 
 ### ⚡ Test:
-```shell
-python -m unittest test/test_api.py
+```diff
+- python -m unittest test/test_api.py
 ```
 
 ### ⚡ Create docker image and run:
-1. ```shell
-   docker build -t task-app .
+1. ```diff
+   + docker build -t task-app .
    ```
-2. ```shell
-   docker run -d -p 8000:8000 task-app
+2. ```diff
+   + docker run -d -p 8000:8000 task-app
    ```
 
 ### ⚡ Run docker-compose and show logs:
-1. ```shell
-   docker-compose up -d --build
+1. ```diff
+   @@ docker-compose up -d --build @@
    ```
-2. ```shell
-   docker-compose logs -f
+2. ```diff
+   @@ docker-compose logs -f @@
    ```
